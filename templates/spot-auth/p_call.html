@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+
+	<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+	<form action="p_call" method="POST">
+		<input type="text" name="uid" id="uidv">
+		{% csrf_token %}
+		<button type="submit" class="btn btn-primary">Pusher call</button>	
+	</form>
+
+
+	<script type="text/javascript">
+
+		// function trigger()
+		Pusher.logToConsole = true;
+
+	    var pusher = new Pusher('bad6c2484fcdd281f3e8', {
+	      cluster: 'ap2',
+	      forceTLS: true
+	    });
+		var uID = Math.floor((Math.random()*100)+1)
+		document.getElementById('uidv').value =  uID;
+		var channel = pusher.subscribe(uID) // The Channel you want to subscribe to
+		channel.bind('my-event', function(data) {
+  			// data = {message: "Hello you", progress: 40}
+  			console.log(data)
+		})
+	</script>
+</body>
+</html>
